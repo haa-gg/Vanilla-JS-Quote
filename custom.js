@@ -67,7 +67,7 @@ function setValues(){
   
   sampleNumber = sampleNumberInput;
 
-//Set price based on non-expedited values
+//Set price
 switch (true){
 
   case (sampleNumber <= low) :
@@ -202,6 +202,7 @@ if (sampleNumberInput > -1){
 
 }
 }
+// END QUOTE GENERATION FUNCTION
 
 //Enable/ disable the controller input field based on if they want the recommended amount or a custom one
 function controlToggle(){

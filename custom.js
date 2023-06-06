@@ -203,28 +203,30 @@ function toRoman(num){
   //Where we hold the roman numeral value which we get down below
   var roman = "";
   // The following 2 arrays work as a key between numeric intger values and their corresponding roman numeral values
+  // E.G. decimalNum[2] and romanNum[2] correspond to 5000 and M respectively
   var decimalNum = [10000, 5000, 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
   var romanNum = ["Ẋ", "V̇", "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
 
   // Outer loop: Do this for the length of the decimalNum array length
   for (var i = 0; i < decimalNum.length; i++) {
-    // Inner loop: Do this while the number we want to convert is bigger than the number
+    // Inner loop: Do this while the number we want to convert is bigger than the number in the decimalNum array
     while (num >= decimalNum[i]) {
+      // Each time the while loop runs, concat the corresponding roman numeral to our "roman" variable
       roman += romanNum[i];
+      // Each time the while loop runs, subtract the numeric amount of the roman numeral from our number total
       num -= decimalNum[i];
     }
   }
 
+  // Share our converted roman numeral with the app
   return roman;
 }
 
 function convertNumeral(){
 if (roman.checked){
-  console.log(toRoman(total) + " numeral"); // outputs "XXVII"
-  console.log('roman yes ' + total);
   document.querySelector('.total').innerHTML = toRoman(total);
 } else {
-  console.log('roman no ' + total);
+// No need to do anything
 }
 }
 

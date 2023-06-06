@@ -1,5 +1,7 @@
 var recommendControls = document.getElementById("recommendYes");
 var controlInput = document.getElementById("sampleControl");
+var roman = document.getElementById("romanYes");
+var total = '';
 
 //This is where the vast majority of the magic happens but there's a wee function down near the bottom that deals with inputs being enabled or disabled
 function quoteTool(){
@@ -30,7 +32,7 @@ var extractionTotal;
 var subtotal;
 var salesTax = 1.08025;
 var taxFee;
-var total;
+
 
 //Prices without being expedited
 var normalExtraction = 20;
@@ -60,7 +62,7 @@ var formatter = new Intl.NumberFormat('en-US', {
 
 //Set values for sampleNumber and unitPrice, this is called lower in the script
 //BEGIN SET VALUE FUNCTION
-function setValues(){
+const setValues = () =>{
 
 
   extractionFee = normalExtraction;
@@ -125,7 +127,7 @@ subtotal = processCost + extractionTotal;
 taxFee = subtotal * salesTax - subtotal;
 
 total = subtotal + taxFee;
-
+console.log(total);
 }
 //END SET VALUE FUNCTION
 
@@ -193,14 +195,50 @@ function valueUpdate(slotsPaid){
 }
 //END VALUE UPDATE FUNCTION
 
+//convert total to roman numbers
+//Why such an odd feature? I saw it on leetcode and wanted to add it link: https://leetcode.com/problems/roman-to-integer/
+function toRoman(num){
+  // probably going to be a decimal so let's round it quick
+  num = Math.ceil(num);
+  //Where we hold the roman numeral value which we get down below
+  var roman = "";
+  // The following 2 arrays work as a key between numeric intger values and their corresponding roman numeral values
+  var decimalNum = [10000, 5000, 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+  var romanNum = ["Ẋ", "V̇", "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+
+  // Outer loop: Do this for the length of the decimalNum array length
+  for (var i = 0; i < decimalNum.length; i++) {
+    // Inner loop: Do this while the number we want to convert is bigger than the number
+    while (num >= decimalNum[i]) {
+      roman += romanNum[i];
+      num -= decimalNum[i];
+    }
+  }
+
+  return roman;
+}
+
+function convertNumeral(){
+if (roman.checked){
+  console.log(toRoman(total) + " numeral"); // outputs "XXVII"
+  console.log('roman yes ' + total);
+  document.querySelector('.total').innerHTML = toRoman(total);
+} else {
+  console.log('roman no ' + total);
+}
+}
+
 //Run the functions only if the value entered is a positive number
 if (sampleNumberInput > -1){
   setValues();
   checkValues();
   valueUpdate();
+  convertNumeral();
 } else{
 
 }
+
+
 }
 // END QUOTE GENERATION FUNCTION
 
@@ -213,6 +251,10 @@ function controlToggle(){
   }
 }
 
+
+
 function formToggle(){
   document.querySelector('.infoFormValid').slideToggle("slow");
 }
+
+// Rebuilding slideToggle functionality without jQuery
